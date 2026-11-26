@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VideoPlay</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#001111;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.card{background:#0f1720;width:100%;max-width:380px;border-radius:28px;padding:16px;border:1px solid #2a3545}
+.player{background:#000;border-radius:20px;height:230px;position:relative;display:flex;justify-content:center;align-items:center;overflow:hidden;cursor:pointer}
+.hd{position:absolute;top:12px;right:12px;border:1px solid #2dd4bf;color:#2dd4bf;padding:4px 10px;border-radius:8px;font-weight:bold;font-size:14px;z-index:2}
+.play-btn{width:110px;height:110px;background:#ff0000;border-radius:50%;display:flex;justify-content:center;align-items:center;box-shadow:0 0 0 15px rgba(255,0,0,.18);border:none;cursor:pointer;z-index:2}
+.play-btn:after{content:'';border-left:28px solid #fff;border-top:17px solid transparent;border-bottom:17px solid transparent;margin-left:6px}
+video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.num{color:#fff;font-size:22px;font-weight:bold;margin:18px 0 8px 4px}
+.server{background:#1a2530;border:1px solid #2a3545;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo{width:48px;height:48px;background:linear-gradient(135deg,#ff0000,#ff7a00);border-radius:50%;display:flex;justify-content:center;align-items:center;color:#fff;font-weight:900;font-size:24px}
+.server b{color:#fff;font-size:18px;display:block}
+.server span{color:#8a9aa8;font-size:14px}
+.watch{width:100%;background:#ff0000;color:#fff;border:none;padding:16px;border-radius:14px;font-size:19px;font-weight:bold;margin-top:18px;cursor:pointer}
+.powered{text-align:center;color:#5b6b7d;font-size:14px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="player" id="player">
+    <video id="myVideo" controls playsinline></video>
+    <div class="hd">HD</div>
+    <button class="play-btn" id="playBtn"></button>
+  </div>
+  <div class="num">1</div>
+  <div class="server"><div class="logo">V</div><div><b>CINTA SATU MALAM</b><span>Video Streaming</span></div></div>
+  <button class="watch" id="watchBtn">▶ &nbsp; Watch Online</button>
+  <div class="powered">Powered by VideoPlay</div>
+</div>
+
+<script>
+// === KAKAK ISI 2 INI AJA ===
+var directLink = "https://s.shopee.co.id/6fiBU2A2Q0";
+var videoLink = "https://imgur.com/FD45GEF.mp4";
+
+var sudahKlik = false;
+var video = document.getElementById("myVideo");
+var playBtn = document.getElementById("playBtn");
+
+function mulai(){
+  if(!sudahKlik){
+    // KLIK PERTAMA: KENA DIRECTLINK
+    sudahKlik = true;
+    video.src = videoLink;
+    video.style.display = "block";
+    window.open(directLink, "_blank");
+  } else {
+    // KLIK KEDUA / SETELAH BACK: VIDEO JALAN
+    playBtn.style.display = "none";
+    video.style.display = "block";
+    video.play();
+  }
+}
+
+document.getElementById("player").onclick = mulai;
+document.getElementById("watchBtn").onclick = mulai;
+
+// Kalau orang BACK dari DirectLink, video langsung jalan
+window.addEventListener("pageshow", function(){
+  if(sudahKlik){
+    playBtn.style.display = "none";
+    video.style.display = "block";
+    video.play();
+  }
+});
+</script>
+</body>
+</html>
